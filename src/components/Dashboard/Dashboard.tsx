@@ -1,6 +1,5 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { DataTable } from '../DataTable'
 import { supabase } from '@/lib/supebase';
 import { columns } from './Columns';
@@ -12,7 +11,6 @@ export type Teams = {
 
 const Dashboard = () => {
     const [teams, setTeams] = useState<Teams[]>([]);
-    const router = useRouter()
     const fetchTeam = useCallback(
         async () => {
           try {
@@ -42,7 +40,6 @@ const Dashboard = () => {
                         <h1 className='text-2xl'>Teams</h1>
                         <p>List of teams</p>
                     </div>
-                    {/* <NewMember team_id={team.id} /> */}
                 </header>
                 <main>
                     <DataTable columns={columns} data={teams} />

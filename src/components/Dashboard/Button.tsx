@@ -1,18 +1,18 @@
-'use client'
-import { useRouter } from 'next/navigation';
-import React from 'react'
-import { Button } from '../ui/button';
+'use client';
 
-const ButtonR = () => {
-    const router = useRouter();
-    const handleNavigation = () => {
-        router.push('/team'); // This is where you navigate to another page or component
-    };
-    return (
-        <Button>
-            <span onClick={handleNavigation}>Go</span>
-        </Button>
-    )
+import React from 'react';
+import Link from 'next/link';
+
+interface ButtonRProps {
+    id: string | number;
 }
 
-export default ButtonR
+const ButtonR: React.FC<ButtonRProps> = ({ id }) => {
+    return (
+        <Link href={`/team/${id}`}>
+            <span>View</span>
+        </Link>
+    );
+}
+
+export default ButtonR;
