@@ -31,22 +31,33 @@ export const columns:ColumnDef<Member>[]=[
         accessorKey:'role',
         header:'Role',
         cell: ({ row }) => {
+            console.log(row.original)
             const {open,setLoading,setOpen} = useHelpers()
             const role:string = row.getValue('role')
-            const id: string = row.getValue('id');
+            const rowdata: string = row.original
+            console.log('viii',rowdata.id)
 
             const onRoleChanged = async (v: string) => {
+                
               try {
                 setLoading(true);
-                const { data, error } = await supabase
+                const { data } = await supabase
                   .from('team_member')
                   .update({
                     role: v
                   })
-                  .eq("id", id)
+                  .eq("id",'62917689-8adc-4af0-b1d2-cdb3c260049b')
                   .select('*');
+
+                //   const { data, error } = await supabase
+                //   .from('team_member')
+                //   .update({ role: 'xxx' })
+                //   .eq('id', '1')
+                //   .select()
+                
       
-                if (data) {
+                if (data && data.length > 0) {
+                    console.log('esito',data)
                   toast.success("Role updated successfully")
                 }
               } catch (error: any) {
@@ -58,9 +69,7 @@ export const columns:ColumnDef<Member>[]=[
             };
             return <div className="w-[120px]" onClick={()=> setOpen(!open)}>
                 {!open && <span className="text-sm text-neutral-500 capitalize">{role}</span>}
-                {open && <Roles {...{selected:role}} setSelected={(v)=>onRoleChanged(v)}/>}
-                
-                
+                {open && <Roles {...{selected:role}} setSelected={(v)=>onRoleChanged(v)}/>}   
             </div>
         },
     },
